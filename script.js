@@ -8,8 +8,11 @@ var askCharacter;
 var askUppercase;
 var askLowercase;
 var choices;
+var inputCharacterLength;
+
 
 var character = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "_", "[", "]", "{", "}", ";", ":", "?", "/", ".", ",", "<", ">", "`", "~"];
+
 var number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 var alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 // Function that changes letters to Uppercase
@@ -22,19 +25,24 @@ var alpha2 = alpha.map(toUpper);
 
 //checks prompts
 function generatePassword() {
-  enter = parseInt(prompt("How many characters would you like your password?"))
-  if (!enter) {
-    // If no input value 
+  inputCharacterLength = parseInt(prompt("How many characters would you like your password?"))
+var inputCharacterLengthOK = true;
+if (inputCharacterLength === undefined || inputCharacterLength < 8 || inputCharacterLength > 128) {
+  inputCharacterLengthOK = false;
+}
+  while(!inputCharacterLength) {
     alert("Please enter a value");
-  } else if (enter < 8 || enter > 128) {
-    enter = parseInt(prompt("Enter value between 8 and 128"));
-  } else {
-    // Prompt questions
-    askNumber = confirm("Will this contain numbers?");
-    askCharacter = confirm("Will this contain special characters?");
-    askUppercase = confirm("Will this contain Uppercase letters?");
-    askLowercase = confirm("Will this contain Lowercase letters?");
+    inputCharacterLength = parseInt(prompt("Enter value between 8 and 128"));
+    if (inputCharacterLength === undefined || inputCharacterLength < 8 || inputCharacterLength > 128) {
+      inputCharacterLengthOK = false;
+    }
   }
+
+    // Prompt questions
+  askNumber = confirm("Will this contain numbers?");
+  askCharacter = confirm("Will this contain special characters?");
+  askUppercase = confirm("Will this contain Uppercase letters?");
+  askLowercase = confirm("Will this contain Lowercase letters?");
 // If statement for if no prompts are selected 
   if (!askNumber && !askCharacter && !askUppercase && !askLowercase) {
     choices = alert("You must choose a criteria");
@@ -78,15 +86,19 @@ function generatePassword() {
   else if (askUppercase) {
     choices = alpha2;
   }
+  console.log(choices)
 }
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
+  // return statement
   var passwordText = document.querySelector("#password");
-  // 'For' Statement?
-  passwordText.value = password;
+  // 'For' loop for length of password, random # gen for which array
 
+
+  passwordText.value = password;
+  passwordText.textContent = "stringy";
 }
 
 // Add event listener to generate button
